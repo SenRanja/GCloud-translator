@@ -1,0 +1,19 @@
+
+credentials_json_file: church-translatior-d03ffc4a4850.json
+
+# Live Speech Audio
+# See language support list: https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages
+# Common choices: cmn-Hans-CN (Chinese (Simplified, China)) cmn-Hans-HK (Chinese (Simplified, Hong Kong)) en-US (English (United States)) ja-JP (Japanese (Japan)) ko-KR (Korean (South Korea)) su-ID (Sundanese (Indonesia))
+audio_source_language: en-US # This must align with `source_language`
+
+# Translation Text
+# See language support list: https://cloud.google.com/translate/docs/languages
+# Common choices: en-US zh-CN zh-TW id(Indonesian) ja(Japanese)
+source_language: en # This must align with `audio_source_language`
+target_language: zh
+
+# Audio
+rate: 16000
+chunk: 1600  # 100ms
+
+
