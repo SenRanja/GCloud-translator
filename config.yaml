@@ -16,4 +16,5 @@ target_language: zh
 rate: 16000
 chunk: 1600  # 100ms
 
-
+# Push
+push_url: http://192.227.167.113:5000/push

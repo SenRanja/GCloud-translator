@@ -2,6 +2,7 @@ import json
 import os
 import queue
 import pyaudio
+import requests
 import yaml
 from google.cloud import speech
 from google.oauth2 import service_account
@@ -15,7 +16,7 @@ PROJECT_ID = ''
 audio_source_language = ''
 source_language = ''
 target_language = ''
-
+push_url = ''
 
 def callback(in_data, frame_count, time_info, status_flags):
     q.put(in_data)
@@ -41,6 +42,13 @@ def listen_print_loop(responses):
                     # Output the translation
                     translated_text = translate_text(transcript, source_language= source_language, target_language = target_language, credentials=credentials, PROJECT_ID=PROJECT_ID)
                     print(f"Translated: {translated_text}")
+
+                    # Push to url
+                    try:
+                        requests.post(push_url, json={"text": transcript+' '+translated_text}, headers={'Content-Type': 'application/json'})
+                    except Exception as e:
+                        print("Push Server Error:", str(e)[:30])
+
                 except Exception as e:
                     print(f"Error: {e}")
 
@@ -77,6 +85,9 @@ def main():
     RATE = int(yaml_conf['rate'])
     CHUNK = int(yaml_conf['chunk'])
 
+    # push_url
+    global push_url
+    push_url = yaml_conf['push_url']
 
     # Setup audio stream: Although the variable `audio_stream` seems not be called, but it matters in silence
     # Capture the mic
