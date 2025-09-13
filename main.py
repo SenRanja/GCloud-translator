@@ -89,20 +89,25 @@ def main():
     global push_url
     push_url = yaml_conf['push_url']
 
-    # Setup audio stream: Although the variable `audio_stream` seems not be called, but it matters in silence
-    # Capture the mic
-    audio_interface = pyaudio.PyAudio()
-    audio_stream = audio_interface.open(
-        format=pyaudio.paInt16,
-        channels=1,
-        rate=RATE,
-        input=True,
-        frames_per_buffer=CHUNK,
-        stream_callback=callback,
-    )
 
-    while True:
+    # For more plausible usage to avoid abuse in once, here canceled while true structure.
+    # while True:
+    for while_true_number in range(0, 10):
         try:
+
+            # Setup audio stream: Although the variable `audio_stream` seems not be called, but it matters in silence
+            # Capture the mic
+            audio_interface = pyaudio.PyAudio()
+            audio_stream = audio_interface.open(
+                format=pyaudio.paInt16,
+                channels=1,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK,
+                stream_callback=callback,
+            )
+
+
             print("🎤 Speak into your microphone... (Ctrl+C to stop)")
 
             # Configure recognition
